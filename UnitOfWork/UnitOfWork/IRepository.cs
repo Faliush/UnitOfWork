@@ -31,7 +31,8 @@ public interface IRepository<TEntity> where TEntity : class
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false);
+        bool ignoreAutoInclude = false,
+        CancellationToken cancellationToken = default);
 
     Task<IPagedList<TEntity>> GetPagedListAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -41,7 +42,8 @@ public interface IRepository<TEntity> where TEntity : class
         int pageSize = 20,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false);
+        bool ignoreAutoInclude = false,
+        CancellationToken cancellationToken = default);
 
     TEntity? GetFirstOrDefault(
         Expression<Func<TEntity, bool>>? predicate = null,
@@ -57,7 +59,8 @@ public interface IRepository<TEntity> where TEntity : class
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false);
+        bool ignoreAutoInclude = false,
+        CancellationToken cancellationToken = default);
 
     void Insert(TEntity entity);
 

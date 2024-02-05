@@ -96,7 +96,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false)
+        bool ignoreAutoInclude = false,
+        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -116,8 +117,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             query = include(query);
 
         return orderBy is not null
-            ? await orderBy(query).ToListAsync()
-            : await query.ToListAsync();
+            ? await orderBy(query).ToListAsync(cancellationToken)
+            : await query.ToListAsync(cancellationToken);
     }
 
     public async Task<IPagedList<TEntity>> GetPagedListAsync(
@@ -128,7 +129,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         int pageSize = 20,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false)
+        bool ignoreAutoInclude = false, 
+        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -148,8 +150,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             query = include(query);
 
         return orderBy is not null
-            ? await orderBy(query).ToPagedListAsync(pageIndex, pageSize)
-            : await query.ToPagedListAsync(pageIndex, pageSize);
+            ? await orderBy(query).ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken)
+            : await query.ToPagedListAsync(pageIndex, pageSize, 0, cancellationToken);
     }
 
     public TEntity? GetFirstOrDefault(
@@ -188,7 +190,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool disableTracking = false,
         bool ignoreQueryFilters = false,
-        bool ignoreAutoInclude = false)
+        bool ignoreAutoInclude = false,
+        CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = _dbSet;
 
@@ -208,8 +211,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             query = include(query);
 
         return orderBy is not null
-            ? await orderBy(query).FirstOrDefaultAsync()
-            : await query.FirstOrDefaultAsync();
+            ? await orderBy(query).FirstOrDefaultAsync(cancellationToken)
+            : await query.FirstOrDefaultAsync(cancellationToken);
     }
 
     public void Insert(TEntity entity) =>
