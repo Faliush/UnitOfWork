@@ -18,11 +18,6 @@ public sealed class UnitOfWork<TContext> : IUnitOfWork<TContext>, IRepositoryFac
 
     public SaveChangesResult LastSaveChangeResult { get; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <returns></returns>
     public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
     {
         _repositories ??= new Dictionary<Type, object>();
@@ -35,10 +30,6 @@ public sealed class UnitOfWork<TContext> : IUnitOfWork<TContext>, IRepositoryFac
         return (Repository<TEntity>)_repositories[type];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public int SaveChanges()
     {
         try
@@ -52,10 +43,6 @@ public sealed class UnitOfWork<TContext> : IUnitOfWork<TContext>, IRepositoryFac
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public async Task<int> SaveChangesAsync()
     {
         try
@@ -69,19 +56,12 @@ public sealed class UnitOfWork<TContext> : IUnitOfWork<TContext>, IRepositoryFac
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="disposing"></param>
     private void Dispose(bool disposing)
     {
         if (!_disposed)

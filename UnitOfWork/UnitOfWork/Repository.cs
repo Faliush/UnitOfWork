@@ -17,10 +17,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         _dbSet = _dbContext.Set<TEntity>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
     public void Delete(object id)
     {
         var entity = _dbSet.Find(id);
@@ -28,21 +24,9 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             Delete(entity);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
     public void Delete(TEntity entity) =>
         _dbSet.Remove(entity);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="orderBy"></param>
-    /// <param name="include"></param>
-    /// <param name="disableTracking"></param>
-    /// <returns></returns>
     public IQueryable<TEntity> GetAll(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -106,14 +90,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             : query.ToPagedList(pageIndex, pageSize);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="orderBy"></param>
-    /// <param name="include"></param>
-    /// <param name="disableTracking"></param>
-    /// <returns></returns>
     public async Task<IList<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -176,14 +152,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             : await query.ToPagedListAsync(pageIndex, pageSize);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="orderBy"></param>
-    /// <param name="include"></param>
-    /// <param name="disableTracking"></param>
-    /// <returns></returns>
     public TEntity? GetFirstOrDefault(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -214,14 +182,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             : query.FirstOrDefault();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="predicate"></param>
-    /// <param name="orderBy"></param>
-    /// <param name="include"></param>
-    /// <param name="disableTracking"></param>
-    /// <returns></returns>
     public async Task<TEntity?> GetFirstOrDefaultAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -252,26 +212,13 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
             : await query.FirstOrDefaultAsync();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
     public void Insert(TEntity entity) =>
         _dbSet.Add(entity);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+
     public ValueTask<EntityEntry<TEntity>> InsertAsync(TEntity entity, CancellationToken cancellationToken = default) =>
         _dbSet.AddAsync(entity, cancellationToken);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="entity"></param>
     public void Update(TEntity entity) =>
         _dbSet.Update(entity);
 }
